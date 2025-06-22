@@ -2,4 +2,6 @@
 @plugin "daisyui";
 @theme {
     --font-rancho: "Rancho", "sans-serif";
+    --font-raleway: "Raleway", "sans-serif";
+    --color-coffee:#331A15;
 }

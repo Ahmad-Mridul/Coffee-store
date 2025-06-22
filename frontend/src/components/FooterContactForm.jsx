@@ -24,7 +24,7 @@ const FooterContactForm = () => {
                 ></textarea>
                 <br />
                 <button class="border border-[#331A15] text-[#331A15] hover:bg-[#331A15] hover:text-white font-medium py-2 px-4 rounded">
-                    Outline Button
+                    Send a message
                 </button>
             </form>
         </div>

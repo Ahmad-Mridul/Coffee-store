@@ -18,7 +18,7 @@ const Footer = () => {
                 }}
                 className="flex items-center justify-around py-5"
             >
-                <div>
+                <div className="space-y-3">
                     <img className="w-1/9" src={logo} alt="" />
                     <h2 className="font-rancho text-3xl text-[#331A15]">
                         Espresso Emporium
