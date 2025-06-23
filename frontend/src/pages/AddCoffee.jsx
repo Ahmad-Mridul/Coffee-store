@@ -23,8 +23,17 @@ const AddCoffee = () => {
             details,
             photo
         };
-
-        console.log(coffeeData);
+        fetch("http://localhost:3000/coffees",{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(coffeeData)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data);
+        })
     }
     return (
         <div
