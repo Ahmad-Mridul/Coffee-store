@@ -3,6 +3,29 @@ import bg from "../assets/more/11.png";
 import { FaArrowLeftLong } from "react-icons/fa6";
 const AddCoffee = () => {
     const navigate = useNavigate();
+    const handleAddCoffee = e =>{
+        e.preventDefault();
+        const form = e.target;
+        const coffeeName = form.coffeeName.value;
+        const chefName = form.chefName.value;
+        const supplierName = form.supplierName.value;
+        const taste = form.taste.value;
+        const category = form.category.value;
+        const details = form.details.value;
+        const photo = form.photo.value;
+
+        const coffeeData = {
+            coffeeName,
+            chefName,
+            supplierName,
+            taste,
+            category,
+            details,
+            photo
+        };
+
+        console.log(coffeeData);
+    }
     return (
         <div
             style={{
@@ -29,7 +52,7 @@ const AddCoffee = () => {
                         letters, as opposed to using Content here.
                     </p>
                     <div className="">
-                        <form>
+                        <form onSubmit={handleAddCoffee}>
                             <div className="flex gap-2 mb-3">
                                 <div className="w-6/12">
                                     <label
@@ -49,7 +72,7 @@ const AddCoffee = () => {
                                 </div>
                                 <div className="w-6/12">
                                     <label
-                                        htmlFor="coffeeName"
+                                        htmlFor="chefName"
                                         className="text-coffee"
                                     >
                                         Chef
@@ -58,7 +81,7 @@ const AddCoffee = () => {
                                     <input
                                         type="text"
                                         className="border w-full text-black border-coffee rounded p-2  "
-                                        name="coffeeName"
+                                        name="chefName"
                                         required
                                         placeholder="Chef Name"
                                     />
@@ -67,7 +90,7 @@ const AddCoffee = () => {
                             <div className="flex gap-2 mb-3">
                                 <div className="w-6/12">
                                     <label
-                                        htmlFor="coffeeName"
+                                        htmlFor="supplierName"
                                         className="text-coffee"
                                     >
                                         Supplier
@@ -76,14 +99,14 @@ const AddCoffee = () => {
                                     <input
                                         type="text"
                                         className="border w-full text-black border-coffee rounded p-2  "
-                                        name="coffeeName"
+                                        name="supplierName"
                                         required
                                         placeholder="Supplier Name"
                                     />
                                 </div>
                                 <div className="w-6/12">
                                     <label
-                                        htmlFor="coffeeName"
+                                        htmlFor="taste"
                                         className="text-coffee"
                                     >
                                         Taste
@@ -92,7 +115,7 @@ const AddCoffee = () => {
                                     <input
                                         type="text"
                                         className="border w-full text-black border-coffee rounded p-2  "
-                                        name="coffeeName"
+                                        name="taste"
                                         required
                                         placeholder="Taste"
                                     />
@@ -101,7 +124,7 @@ const AddCoffee = () => {
                             <div className="flex gap-2 mb-3">
                                 <div className="w-6/12">
                                     <label
-                                        htmlFor="coffeeName"
+                                        htmlFor="category"
                                         className="text-coffee"
                                     >
                                         Category
@@ -110,14 +133,14 @@ const AddCoffee = () => {
                                     <input
                                         type="text"
                                         className="border w-full text-black border-coffee rounded p-2  "
-                                        name="coffeeName"
+                                        name="category"
                                         required
                                         placeholder="Category"
                                     />
                                 </div>
                                 <div className="w-6/12">
                                     <label
-                                        htmlFor="coffeeName"
+                                        htmlFor="details"
                                         className="text-coffee"
                                     >
                                         Details
@@ -126,7 +149,7 @@ const AddCoffee = () => {
                                     <input
                                         type="text"
                                         className="border w-full text-black border-coffee rounded p-2  "
-                                        name="coffeeName"
+                                        name="details"
                                         required
                                         placeholder="Details"
                                     />
@@ -135,7 +158,7 @@ const AddCoffee = () => {
                             <div className="">
                                 <div className="">
                                     <label
-                                        htmlFor="coffeeName"
+                                        htmlFor="photo"
                                         className="text-coffee"
                                     >
                                         Photo
@@ -144,7 +167,7 @@ const AddCoffee = () => {
                                     <input
                                         type="text"
                                         className="border w-full text-black border-coffee rounded p-2  "
-                                        name="coffeeName"
+                                        name="photo"
                                         required
                                         placeholder="Photo URL"
                                     />
