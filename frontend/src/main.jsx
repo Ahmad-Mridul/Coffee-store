@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import Home from './pages/Home.jsx'
 import AddCoffee from './pages/AddCoffee.jsx'
+import ContextApi from './utils/context/ContextApi.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
 ])
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <ContextApi>
+      <RouterProvider router={router} />
+    </ContextApi>
   </StrictMode>,
 )

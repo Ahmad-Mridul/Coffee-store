@@ -1,40 +1,33 @@
 import { useNavigate } from "react-router";
 import bg from "../assets/more/11.png";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useContext } from "react";
+import { CoffeeContext } from "../utils/context/ContextApi";
 const AddCoffee = () => {
     const navigate = useNavigate();
-    const handleAddCoffee = e =>{
+    const {coffee,setCoffee} = useContext(CoffeeContext);
+    const handleAddCoffee = (e) => {
         e.preventDefault();
         const form = e.target;
-        const coffeeName = form.coffeeName.value;
-        const chefName = form.chefName.value;
-        const supplierName = form.supplierName.value;
-        const taste = form.taste.value;
-        const category = form.category.value;
-        const details = form.details.value;
-        const photo = form.photo.value;
+        const formData = new FormData(form);
 
-        const coffeeData = {
-            coffeeName,
-            chefName,
-            supplierName,
-            taste,
-            category,
-            details,
-            photo
-        };
-        fetch("http://localhost:3000/coffees",{
-            method:"POST",
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify(coffeeData)
+        fetch("http://localhost:3000/coffees", {
+            method: "POST",
+            body: formData,
         })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
-        })
-    }
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.insertedId) {
+                    const newCoffee = [...coffee,data];
+                    setCoffee(newCoffee);
+                    alert("Coffee added successfully!");
+                    form.reset();
+                }
+            })
+            .catch((err) => console.error(err));
+    };
+
     return (
         <div
             style={{
@@ -174,15 +167,18 @@ const AddCoffee = () => {
                                     </label>
                                     <br />
                                     <input
-                                        type="text"
+                                        type="file"
                                         className="border w-full text-black border-coffee rounded p-2  "
                                         name="photo"
+                                        accept="image/*"
                                         required
-                                        placeholder="Photo URL"
                                     />
                                 </div>
-                            </div><br />
-                            <button className="btn w-full bg-[#331A15]">Add Coffee</button>
+                            </div>
+                            <br />
+                            <button className="btn w-full bg-[#331A15]">
+                                Add Coffee
+                            </button>
                         </form>
                     </div>
                 </div>
