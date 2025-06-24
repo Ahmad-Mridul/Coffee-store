@@ -31,7 +31,7 @@ const PopularProducts = () => {
                 <div className="absolute right-0 bottom-0">
                     <img src={bg_right} className="h-[500px]" alt="" />
                 </div>
-                <div className="">
+                <div className="grid grid-cols-2 gap-2 py-5">
                     {
                         coffee.map(coffee=><CoffeeCard key={coffee._id} coffee={coffee} />)
                     }

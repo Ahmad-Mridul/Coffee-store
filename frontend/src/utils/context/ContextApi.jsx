@@ -7,7 +7,10 @@ const ContextApi = ({children}) => {
     useEffect(()=>{
         fetch("http://localhost:3000/coffees")
         .then(res=>res.json())
-        .then(data=>setCoffee(data))
+        .then(data=>{
+            setCoffee(data)
+            console.log(data);
+        })
     },[])
     const authInfo = {
         coffee,
