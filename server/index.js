@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
+require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const path = require("path");
 const { log } = require("console");
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads")); // Serve images from uploads folder
 
 const uri =
-	"mongodb+srv://lamridulbtech:BAdM6q1YZszYUq8J@cluster0.rhoqvhp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; // Replace with your URI
+	`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rhoqvhp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`; // Replace with your URI
 
 const client = new MongoClient(uri, {
 	serverApi: {
