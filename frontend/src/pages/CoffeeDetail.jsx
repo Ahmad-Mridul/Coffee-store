@@ -11,7 +11,7 @@ const CoffeeDetail = () => {
 		taste,
 		category,
 		details,
-		photo,
+		photo,   
 	} = detailedCoffee;
 	console.log(detailedCoffee);
 	return (
