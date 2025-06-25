@@ -13,6 +13,9 @@ const AddCoffee = () => {
 
         fetch("http://localhost:3000/coffees", {
             method: "POST",
+            headers:{
+                'Content-Tyoe':'application/json'
+            },
             body: formData,
         })
             .then((res) => res.json())
