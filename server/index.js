@@ -3,14 +3,12 @@ const cors = require("cors");
 const multer = require("multer");
 require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const path = require("path");
 const { log } = require("console");
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads")); // Serve images from uploads folder
 
 const uri =
 	`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rhoqvhp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`; // Replace with your URI
@@ -23,17 +21,6 @@ const client = new MongoClient(uri, {
 	},
 });
 
-// Multer Setup
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, "uploads/");
-	},
-	filename: (req, file, cb) => {
-		const uniqueName = Date.now() + path.extname(file.originalname);
-		cb(null, uniqueName);
-	},
-});
-const upload = multer({ storage: storage });
 
 async function run() {
 	try {
@@ -41,35 +28,31 @@ async function run() {
 		const database = client.db("coffeeDB");
 		const coffeesCollection = database.collection("coffees");
 
-		app.get("/coffees/:id", async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: new ObjectId(id) };
-			const cursor = coffeesCollection.find(query);
-			const coffees = await cursor.toArray();
-			res.send(coffees);
-		});
-
-        app.get("/coffees",async(req,res)=>{
-			console.log("new data");
-            const allCoffees = coffeesCollection.find();
-            const result = await allCoffees.toArray();
-            res.send(result)
-        })
-
-		app.post("/coffees", upload.single("photo"), async (req, res) => {
-			const coffeeData = req.body;
-			coffeeData.photoPath = req.file.path; // Save file path in DB
-			const result = await coffeesCollection.insertOne(coffeeData);
+		app.get("/coffees",async(req,res)=>{
+			const cursor = coffeesCollection.find();
+			const result = await cursor.toArray();
 			res.send(result);
-		});
+		})
 
-        app.delete("/coffees/:id",async(req,res)=>{
-            const id = req.params.id;
-            const query = {_id:new ObjectId(id)};
-            const result = await coffeesCollection.deleteOne(query);
-            res.send(result);
-        })
+		app.get("/coffees/:id",async(req,res)=>{
+			const id = req.params.id;
+			const query = {_id:new ObjectId(id)};
+			const result = await coffeesCollection.findOne(query);
+			res.send(result);
+		})
 
+		app.post("/coffees",async(req,res)=>{
+			const coffee = req.body;
+			const result = await coffeesCollection.insertOne(coffee);
+			res.send(result);
+		})
+
+		app.delete("/coffees/:id",async(req,res)=>{
+			const id = req.params.id;
+			const query = {_id:new ObjectId(id)};
+			const result = await coffeesCollection.deleteOne(query);
+			res.send(result);
+		})
 
 		await client.db("admin").command({ ping: 1 });
 		console.log("Connected to MongoDB!");

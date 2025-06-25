@@ -1,35 +1,11 @@
-import { useContext } from "react";
 import { FaEdit } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
 import { RiDeleteBinFill } from "react-icons/ri";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { CoffeeContext } from "../utils/context/ContextApi";
-const CoffeeCard = ({ coffee }) => {
-	const {coffees,setCoffees} = useContext(CoffeeContext);
-	const handleEdit = (_id) => {
-		Swal.fire({
-			title: "Are you sure?",
-			text: "You won't be able to revert this!",
-			icon: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: "Yes, delete it!",
-		}).then((result) => {
-			if (result.isConfirmed) {
-				console.log(_id);
-
-				Swal.fire({
-					title: "Deleted!",
-					text: "Your file has been deleted.",
-					icon: "success",
-				});
-			}
-		});
-	};
+const CoffeeCard = ({ coffee, coffees,setCoffees }) => {
 	// end of edit handler
 	const handleDelete = (_id) => {
-
 		Swal.fire({
 			title: "Are you sure?",
 			text: "You won't be able to revert this!",
@@ -40,47 +16,42 @@ const CoffeeCard = ({ coffee }) => {
 			confirmButtonText: "Yes, delete it!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				fetch(`http://localhost:3000/coffees/${_id}`, {
-					method: "DELETE",
+				fetch(`http://localhost:3000/coffees/${_id}`,{
+					method:"DELETE"
 				})
 					.then((res) => res.json())
 					.then((data) => {
+						console.log(data);
 						if (data.deletedCount > 0) {
-							const remainingCoffees = coffees?.filter(coffee => coffee._id.toString() !==_id.toString());
-							setCoffees(remainingCoffees);
 							Swal.fire({
 								title: "Deleted!",
-								text: "Your file has been deleted.",
+								text: "Your item has been deleted.",
 								icon: "success",
 							});
+							const remaining = coffees.filter(coffee=>coffee._id !== _id);
+							setCoffees(remaining);
 						}
 					});
 			}
 		});
 	};
+
 	// end of delete handler
 	return (
-		<div className="text-coffee bg-[#f3f3] flex items-center justify-between gap-4 p-4 rounded-lg shadow-md mb-4">
+		<div className="text-coffee bg-[#f3f3] flex items-center justify-between gap-4 p-4 rounded-lg shadow-md mb-4 z-20">
 			<div className="">
-				<img
-					src={`http://localhost:3000/${coffee?.photoPath?.replace(
-						/\\/g,
-						"/"
-					)}`}
-					alt={coffee.coffeeName}
-				/>
+				<img src={coffee.photo} alt={coffee.coffeeName} />
 			</div>
 			<div className="">
 				<h3>{coffee.coffeeName}</h3>
 				<p>{coffee.details}</p>
 			</div>
 			<div className="text-2xl space-y-4 grid grid-cols-subgrid">
-				<button
-					onClick={() => handleEdit(coffee._id)}
+				<Link to={`/coffees/${coffee._id}`}
 					className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent"
 				>
 					<IoEye />
-				</button>
+				</Link>
 				<button className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent">
 					<FaEdit />
 				</button>
