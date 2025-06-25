@@ -3,7 +3,19 @@ import { IoEye } from "react-icons/io5";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-const CoffeeCard = ({ coffee, coffees,setCoffees }) => {
+import { Button,Modal } from "antd";
+import { useState } from "react";
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 	// end of edit handler
 	const handleDelete = (_id) => {
 		Swal.fire({
@@ -16,8 +28,8 @@ const CoffeeCard = ({ coffee, coffees,setCoffees }) => {
 			confirmButtonText: "Yes, delete it!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				fetch(`http://localhost:3000/coffees/${_id}`,{
-					method:"DELETE"
+				fetch(`http://localhost:3000/coffees/${_id}`, {
+					method: "DELETE",
 				})
 					.then((res) => res.json())
 					.then((data) => {
@@ -28,7 +40,9 @@ const CoffeeCard = ({ coffee, coffees,setCoffees }) => {
 								text: "Your item has been deleted.",
 								icon: "success",
 							});
-							const remaining = coffees.filter(coffee=>coffee._id !== _id);
+							const remaining = coffees.filter(
+								(coffee) => coffee._id !== _id
+							);
 							setCoffees(remaining);
 						}
 					});
@@ -47,12 +61,13 @@ const CoffeeCard = ({ coffee, coffees,setCoffees }) => {
 				<p>{coffee.details}</p>
 			</div>
 			<div className="text-2xl space-y-4 grid grid-cols-subgrid">
-				<Link to={`/coffees/${coffee._id}`}
+				<Link
+					to={`/coffees/${coffee._id}`}
 					className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent"
 				>
 					<IoEye />
 				</Link>
-				<button className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent">
+				<button onClick={showModal} className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent">
 					<FaEdit />
 				</button>
 				<button
@@ -62,6 +77,19 @@ const CoffeeCard = ({ coffee, coffees,setCoffees }) => {
 					<RiDeleteBinFill />
 				</button>
 			</div>
+			<>
+				<Modal
+					title="Basic Modal"
+					closable={{ "aria-label": "Custom Close Button" }}
+					open={isModalOpen}
+					onOk={handleOk}
+					onCancel={handleCancel}
+				>
+					<p>Some contents...</p>
+					<p>Some contents...</p>
+					<p>Some contents...</p>
+				</Modal>
+			</>
 		</div>
 	);
 };
