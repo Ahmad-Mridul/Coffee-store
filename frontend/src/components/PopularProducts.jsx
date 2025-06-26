@@ -44,7 +44,6 @@ const PopularProducts = () => {
 							coffee={coffee}
 						/>
 					))}
-                    <h2 className="text-center text-coffee text-3xl">Coffees: {coffees.length}</h2>
 				</div>
 			</div>
 		</div>
