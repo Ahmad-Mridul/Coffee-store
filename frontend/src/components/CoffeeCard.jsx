@@ -3,10 +3,12 @@ import { IoEye } from "react-icons/io5";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { Button,Modal } from "antd";
+import { Modal } from "antd";
+import EditModal from "./EditModal";
 import { useState } from "react";
 const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const showModal = () => {
 		setIsModalOpen(true);
 	};
@@ -15,6 +17,22 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
 	};
 	const handleCancel = () => {
 		setIsModalOpen(false);
+	};
+
+	const handleEdit = () => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, Update this!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				showModal();
+			}
+		});
 	};
 	// end of edit handler
 	const handleDelete = (_id) => {
@@ -67,7 +85,10 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
 				>
 					<IoEye />
 				</Link>
-				<button onClick={showModal} className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent">
+				<button
+					onClick={handleEdit}
+					className="btn bg-coffee border border-transparent hover:border-coffee hover:text-coffee hover:bg-transparent"
+				>
 					<FaEdit />
 				</button>
 				<button
@@ -79,15 +100,18 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
 			</div>
 			<>
 				<Modal
-					title="Basic Modal"
+					title={"Edit - " + coffee.coffeeName}
 					closable={{ "aria-label": "Custom Close Button" }}
 					open={isModalOpen}
 					onOk={handleOk}
 					onCancel={handleCancel}
 				>
-					<p>Some contents...</p>
-					<p>Some contents...</p>
-					<p>Some contents...</p>
+					<EditModal
+						coffee={coffee}
+						coffees={coffees}
+						setCoffees={setCoffees}
+						setIsModalOpen={setIsModalOpen}
+					></EditModal>
 				</Modal>
 			</>
 		</div>

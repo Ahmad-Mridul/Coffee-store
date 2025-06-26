@@ -40,6 +40,7 @@ const AddCoffee = () => {
 						text: "You have added a new item",
 						icon: "success",
 					});
+					form.reset();
 				}
 			});
 	};
