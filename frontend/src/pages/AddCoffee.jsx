@@ -1,48 +1,11 @@
 import { useNavigate } from "react-router";
 import bg from "../assets/more/11.png";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { CoffeeContext } from "../utils/context/ContextApi";
-import Swal from 'sweetalert2'
 const AddCoffee = () => {
 	const navigate = useNavigate();
 	const handleAddCoffee = (e) => {
 		e.preventDefault();
-		const form = e.target;
-		const coffeeName = form.coffeeName.value;
-		const chefName = form.chefName.value;
-		const supplierName = form.supplierName.value;
-		const taste = form.taste.value;
-		const category = form.category.value;
-		const details = form.details.value;
-		const photo = form.photo.value;
-		const newCoffee = {
-			coffeeName,
-			chefName,
-			supplierName,
-			taste,
-			category,
-			details,
-			photo,
-		};
-		console.log(newCoffee);
-		fetch("http://localhost:3000/coffees/", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newCoffee),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.insertedId) {
-					Swal.fire({
-						title: "YAY!",
-						text: "You have added a new item",
-						icon: "success",
-					});
-					form.reset();
-				}
-			});
+		
 	};
 
 	return (

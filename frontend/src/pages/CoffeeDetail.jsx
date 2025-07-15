@@ -1,4 +1,3 @@
-import React from "react";
 import { useLoaderData, useNavigate } from "react-router";
 
 const CoffeeDetail = () => {
@@ -13,7 +12,6 @@ const CoffeeDetail = () => {
 		details,
 		photo,   
 	} = detailedCoffee;
-	console.log(detailedCoffee);
 	return (
 		<div className="text-white text-center font-rancho py-20">
             <button className="btn font-rancho bg-coffee text-3xl font-thin" onClick={()=>navigate(-1)}>Go back</button>
