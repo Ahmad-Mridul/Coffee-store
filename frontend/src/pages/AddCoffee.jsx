@@ -5,7 +5,36 @@ const AddCoffee = () => {
 	const navigate = useNavigate();
 	const handleAddCoffee = (e) => {
 		e.preventDefault();
+		const form = e.target;
+		const coffeeName = form.coffeeName.value;
+		const chefName = form.chefName.value;
+		const supplierName = form.supplierName.value;
+		const taste = form.taste.value;
+		const category = form.category.value;
+		const details = form.details.value;
+		const photo = form.photo.value;
+		const newCoffe = {
+			coffeeName,
+			chefName,
+			supplierName,
+			taste,
+			category,
+			details,
+			photo,
+		};
+		console.log(newCoffe);
 		
+		fetch("http://localhost:3000/coffees",{
+			method:"POST",
+			headers:{
+				"Content-Type":"application/json"
+			},
+			body:JSON.stringify(newCoffe)
+		})
+		.then(res=>res.json())
+		.then(data=>{
+			console.log("New Coffee: ",data)
+		})
 	};
 
 	return (
