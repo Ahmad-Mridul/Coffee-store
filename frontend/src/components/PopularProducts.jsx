@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import { SlCup } from "react-icons/sl";
 import bg_left from "../assets/more/4.png";
 import bg_right from "../assets/more/5.png";
-import { CoffeeContext } from "../utils/context/ContextApi";
 import CoffeeCard from "./CoffeeCard";
 import { useEffect, useState } from "react";
 const PopularProducts = () => {

@@ -7,6 +7,8 @@ import Home from './pages/Home.jsx'
 import AddCoffee from './pages/AddCoffee.jsx'
 import ContextApi from './utils/context/ContextApi.jsx'
 import CoffeeDetail from './pages/CoffeeDetail.jsx'
+import SignUp from './pages/SignUp.jsx'
+import LogIn from './pages/LogIn.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,14 +26,20 @@ const router = createBrowserRouter([
         path:"/coffees/:id",
         element:<CoffeeDetail></CoffeeDetail>,
         loader:({params})=>fetch(`http://localhost:3000/coffees/${params.id}`)
+      },
+      {
+        path:"/signup",
+        element:<SignUp/>
+      },
+      {
+        path:"/login",
+        element:<LogIn/>
       }
     ]
   }
 ])
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <ContextApi>
       <RouterProvider router={router} />
     </ContextApi>
-  </StrictMode>,
 )

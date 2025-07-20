@@ -1,4 +1,5 @@
 const express = require("express");
+require('dotenv').config();
 const { ObjectId } = require("mongodb");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const cors = require("cors");
@@ -9,8 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri =
-	"mongodb+srv://birm2476:birm2476@cluster0.cqkzp8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+	`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.cqkzp8h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
 	serverApi: {
@@ -29,7 +29,7 @@ async function run() {
 		const coffeeCollection = mydb.collection("coffees");
 
 		app.get("/coffees", async (req, res) => {
-			const result = await coffeeCollection.find();
+			const result =  coffeeCollection.find();
 			const coffees = await result.toArray();
 			res.send(coffees);
 		});
