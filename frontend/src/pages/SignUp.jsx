@@ -6,11 +6,25 @@ const SignUp = () => {
     const { createUser, createUserWithGoogle } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [name, setName] = useState("");
     const handleSignUp = (e) => {
         e.preventDefault();
+		const newUser = {
+			name,
+			email
+		}
 		createUser(email,pass)
 		.then(result=>{
 			console.log(result.user);
+			fetch("http://localhost:3000/users",{
+				method:"POST",
+				headers:{
+					"Content-Type":"application/json"
+				},
+				body:JSON.stringify(newUser)
+			})
+			.then(res=>res.json())
+			.then(data=>console.log(data))
 		})
 		.catch(err=>{
 			console.log(err.message);
@@ -20,6 +34,15 @@ const SignUp = () => {
         <div className="card bg-base-300 mx-auto my-20 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
                 <fieldset className="fieldset">
+                    <label className="label">Name</label>
+                    <input
+                        name="name"
+                        type="name"
+                        className="input"
+                        placeholder="Name"
+						value={name}
+						onChange={e=>setName(e.target.value)}
+                    />
                     <label className="label">Email</label>
                     <input
                         name="email"
